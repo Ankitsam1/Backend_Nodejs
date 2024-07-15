@@ -17,7 +17,7 @@ const upload = multer({ storage: storage });
 
 const addProduct = async(req, res) => {
     try {
-        const { productName, price, category, bestSeller, description } = req.body;
+        const { productName, category, description } = req.body;
         const image = req.file ? req.file.filename : undefined;
 
         const firmId = req.params.firmId;
@@ -29,9 +29,7 @@ const addProduct = async(req, res) => {
 
         const product = new Product({
             productName,
-            price,
             category,
-            bestSeller,
             description,
             image,
             firm: firm._id
@@ -86,4 +84,27 @@ const deleteProductById = async(req, res) => {
     }
 }
 
-module.exports = { addProduct: [upload.single('image'), addProduct], getProductByFirm, deleteProductById };
+const getProduct = async(req, res) => {
+    try {
+        
+        const products = await Product.find({});
+          console.log(products.length);
+      const r=[];
+      const l=products.length;
+  for(let i=0;i<l;i++){
+     const imd=products[i].firm[0];
+     
+  
+     const fr=await Firm.findById(imd)
+ ///    console.log(fr);
+     r.push(fr)
+  }
+        res.status(200).json({r,products});
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal server error" })
+    }
+}
+
+module.exports = { addProduct: [upload.single('image'), addProduct], getProductByFirm, deleteProductById ,getProduct};

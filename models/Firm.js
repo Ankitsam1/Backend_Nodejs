@@ -10,6 +10,10 @@ const firmSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    contact: {
+        type: String,
+        required: true,
+    },
     category: {
         type: [{
             type: String,
@@ -21,10 +25,6 @@ const firmSchema = new mongoose.Schema({
             type: String,
             enum: ['south-indian', 'north-indian', 'chinese', 'bakery']
         }]
-    },
-    offer: {
-        type: String,
-
     },
     image: {
         type: String

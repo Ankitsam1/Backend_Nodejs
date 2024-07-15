@@ -17,7 +17,7 @@ const upload = multer({ storage: storage });
 
 const addFirm = async(req, res) => {
     try {
-        const { firmName, area, category, region, offer } = req.body;
+        const { firmName, area, contact, category, region } = req.body;
 
         const image = req.file ? req.file.filename : undefined;
 
@@ -33,9 +33,9 @@ const addFirm = async(req, res) => {
         const firm = new Firm({
             firmName,
             area,
+            contact,
             category,
             region,
-            offer,
             image,
             vendor: vendor._id
         })
